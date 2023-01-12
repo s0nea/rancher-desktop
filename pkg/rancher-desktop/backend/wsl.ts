@@ -752,6 +752,7 @@ export default class WSLBackend extends events.EventEmitter implements VMBackend
         GUESTAGENT_PRIVILEGED_SERVICE: 'true',
         GUESTAGENT_CONTAINERD:         cfg?.kubernetes?.containerEngine === ContainerEngine.CONTAINERD ? 'true' : 'false',
         GUESTAGENT_DOCKER:             cfg?.kubernetes?.containerEngine === ContainerEngine.MOBY ? 'true' : 'false',
+        GUESTAGENT_LISTENER_ADDR:      cfg?.guestAgentListenerAddr,
         GUESTAGENT_DEBUG:              this.debug ? 'true' : 'false',
       };
     } else {

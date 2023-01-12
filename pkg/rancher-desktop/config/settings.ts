@@ -87,6 +87,7 @@ export const defaultSettings = {
     showMuted:   false,
     mutedChecks: {} as Record<string, boolean>,
   },
+  guestAgentListenerAddr: '0.0.0.0',
 };
 
 export type Settings = typeof defaultSettings;
