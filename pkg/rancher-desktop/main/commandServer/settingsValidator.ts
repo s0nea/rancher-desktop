@@ -76,6 +76,7 @@ export default class SettingsValidator {
         suppressSudo:    this.checkLima(this.checkBoolean),
         hostResolver:    this.checkPlatform('win32', this.checkBoolean),
         experimental:    { socketVMNet: this.checkPlatform('darwin', this.checkBoolean) },
+        svcListenerAddr: this.checkString, // TODO: check for either 0.0.0.0 or 127.0.0.1 ?
       },
       portForwarding: { includeKubernetesServices: this.checkBoolean },
       images:         {

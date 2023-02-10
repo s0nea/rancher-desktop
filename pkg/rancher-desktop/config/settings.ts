@@ -71,6 +71,7 @@ export const defaultSettings = {
       /** macOS only: if set, use socket_vmnet instead of vde_vmnet. */
       socketVMNet: false,
     },
+    svcListenerAddr: '0.0.0.0',
   },
   portForwarding: { includeKubernetesServices: false },
   images:         {

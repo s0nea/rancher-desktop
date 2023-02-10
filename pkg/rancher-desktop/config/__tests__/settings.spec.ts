@@ -36,6 +36,7 @@ describe('updateFromCommandLine', () => {
         suppressSudo: false,
         hostResolver: true,
         experimental: { socketVMNet: true },
+        svcListenerAddr: '0.0.0.0',
       },
       portForwarding: { includeKubernetesServices: false },
       images:         {
