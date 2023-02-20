@@ -248,6 +248,7 @@ describe('settings', () => {
           traefik: true,
           flannel: false,
         },
+        ingress: { localhostOnly: false },
       },
       portForwarding: { includeKubernetesServices: false },
       images:         {
