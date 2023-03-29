@@ -295,6 +295,11 @@ application:
       legendText: Notification Icon
       label: Hide Notification Icon
 
+virtualMachine:
+  networkingTunnel:
+    legendText: Networking tunnel
+    label: Enable networking tunnel
+
 containerEngine:
   label: Container Engine
   options:
