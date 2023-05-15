@@ -22,14 +22,33 @@ export class DeploymentProfileError extends Error {
  * Data values are ignored, but types are used for validation.
  */
 export const lockableDefaultSettings = {
+  application: {
+    adminAccess:          true,
+    telemetry:            { enabled: true },
+    updater:              { enabled: true },
+    autoStart:            false,
+    startInBackground:    false,
+    hideNotificationIcon: false,
+    window:               { quitOnClose: false },
+  },
   kubernetes: {
     version: '',
     port:    6443,
+    enabled: true,
+    options: { traefik: true },
   },
   containerEngine: {
     allowedImages: {
       enabled:  true,
       patterns: [] as Array<string>,
+    },
+  },
+  experimental: {
+    virtualMachine: {
+      useRosetta:       false,
+      socketVMNet:      false,
+      networkingTunnel: false,
+      proxy:            { enabled: false },
     },
   },
 };

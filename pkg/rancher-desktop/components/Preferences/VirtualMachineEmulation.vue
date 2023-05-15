@@ -1,10 +1,12 @@
 <script lang="ts">
 import os from 'os';
 
-import { Checkbox, RadioButton, RadioGroup } from '@rancher/components';
+import { RadioButton, RadioGroup } from '@rancher/components';
 import Vue from 'vue';
+import { mapGetters } from 'vuex';
 
 import LabeledBadge from '@pkg/components/form/LabeledBadge.vue';
+import RdCheckbox from '@pkg/components/form/RdCheckbox.vue';
 import RdFieldset from '@pkg/components/form/RdFieldset.vue';
 import { Settings, VMType } from '@pkg/config/settings';
 import { RecursiveTypes } from '@pkg/utils/typeUtils';
@@ -14,10 +16,10 @@ import type { PropType } from 'vue';
 export default Vue.extend({
   name:       'preferences-virtual-machine-emulation',
   components: {
-    Checkbox,
     LabeledBadge,
     RadioGroup,
     RdFieldset,
+    RdCheckbox,
     RadioButton,
   },
   props: {
@@ -27,6 +29,7 @@ export default Vue.extend({
     },
   },
   computed: {
+    ...mapGetters('preferences', ['isPreferenceLocked']),
     options(): { label: string, value: VMType, description: string, experimental: boolean, disabled: boolean }[] {
       const defaultOption = VMType.QEMU;
 
@@ -121,9 +124,10 @@ export default Vue.extend({
           data-test="useRosetta"
           :legend-text="t('virtualMachine.useRosetta.legend')"
         >
-          <checkbox
+          <rd-checkbox
             :label="t('virtualMachine.useRosetta.label')"
             :value="preferences.experimental.virtualMachine.useRosetta"
+            :is-locked="isPreferenceLocked('experimental.virtualMachine.useRosetta')"
             @input="onChange('experimental.virtualMachine.useRosetta', $event)"
           />
         </rd-fieldset>
