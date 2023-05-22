@@ -22,6 +22,10 @@ export class DeploymentProfileError extends Error {
  * Data values are ignored, but types are used for validation.
  */
 export const lockableDefaultSettings = {
+  kubernetes: {
+    version: '',
+    port:    6443,
+  },
   containerEngine: {
     allowedImages: {
       enabled:  true,
