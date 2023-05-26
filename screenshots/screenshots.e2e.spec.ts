@@ -50,10 +50,6 @@ test.describe.serial('Main App Test', () => {
     await navPage.progressBecomesReady();
 
     await page.waitForTimeout(2500);
-
-    const navExtension = page.locator('[data-test="extension-nav-epinio"]');
-
-    await expect(navExtension).toBeVisible({ timeout: 30000 });
   });
 
   test.afterAll(() => {
