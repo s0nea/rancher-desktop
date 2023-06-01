@@ -75,6 +75,7 @@ export default Vue.extend({
     :options="options"
     :row="row"
     :disabled="isLocked"
+    :class="{ 'locked' : isLocked }"
     class="path-management"
     @input="updateVal"
   >
@@ -109,5 +110,14 @@ export default Vue.extend({
 
 .path-management::v-deep label {
   color: var(--input-label);
+}
+
+.locked::v-deep .radio-container span.radio-custom {
+  opacity: 1;
+  &:not([aria-checked="true"]) {
+    opacity: 1;
+    background-color: var(--radio-locked-bg);
+    box-shadow: var(--radio-locked-shadow);
+  }
 }
 </style>

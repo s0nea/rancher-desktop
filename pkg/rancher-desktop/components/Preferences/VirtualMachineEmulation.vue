@@ -88,6 +88,7 @@ export default Vue.extend({
               :options="options"
               :name="groupName"
               :disabled="isLocked"
+              :class="{ 'locked' : isLocked }"
             >
               <template
                 v-for="(option, index) in options"
@@ -147,5 +148,13 @@ export default Vue.extend({
     padding-left: 1rem;
     display: flex;
     flex-direction: column;
+  }
+  .locked::v-deep .radio-container span.radio-custom {
+    opacity: 1;
+    &:not([aria-checked="true"]) {
+      opacity: 1;
+      background-color: var(--radio-locked-bg);
+      box-shadow: var(--radio-locked-shadow);
+    }
   }
 </style>

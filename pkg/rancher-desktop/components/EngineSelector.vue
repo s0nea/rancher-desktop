@@ -45,6 +45,7 @@ export default {
     <radio-group
       name="containerEngine"
       class="container-engine"
+      :class="{ 'locked' : isLocked }"
       :value="containerEngine"
       :options="options"
       :row="row"
@@ -61,5 +62,13 @@ export default {
 <style lang="scss" scoped>
 .container-engine::v-deep label {
   color: var(--input-label);
+}
+.locked::v-deep .radio-container span.radio-custom {
+    opacity: 1;
+    &:not([aria-checked="true"]) {
+      opacity: 1;
+      background-color: var(--radio-locked-bg);
+      box-shadow: var(--radio-locked-shadow);
+    }
 }
 </style>
