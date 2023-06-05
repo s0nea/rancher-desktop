@@ -41,11 +41,20 @@ export default Vue.extend({
 </template>
 
 <style lang="scss" scoped>
-  .locked::v-deep .checkbox-container span.checkbox-custom {
-    background-color: var(--checkbox-locked-bg);
-    border-color: var(--checkbox-locked-border);
-    &::after {
-      border-color: var(--checkbox-tick-locked);
+  .rd-checkbox-container {
+    .locked::v-deep .checkbox-container {
+      .checkbox-label {
+        margin-right: 0.3rem;
+      }
+
+      span.checkbox-custom {
+        background-color: var(--checkbox-locked-bg);
+        border-color: var(--checkbox-locked-border);
+
+        &::after {
+          border-color: var(--checkbox-tick-locked);
+        }
+      }
     }
   }
 </style>
