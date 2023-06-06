@@ -62,13 +62,13 @@ export default Vue.extend({
     display: flex;
     align-items: center;
     gap: 0.5rem;
-  }
 
-  .locked {
-    color: var(--dropdown-locked-text);
-
-    &:hover {
+    .locked {
       color: var(--dropdown-locked-text);
+
+      &:hover {
+        color: var(--dropdown-locked-text);
+      }
     }
   }
 </style>
