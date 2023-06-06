@@ -112,15 +112,11 @@ export default (Vue as VueConstructor<Vue & VuexBindings>).extend({
                   @input="onChange('experimental.virtualMachine.type', $event)"
                 >
                   <template #label>
-                    <div
-                      v-tooltip="disabledVmTypeTooltip(option.disabled)"
-                    >
-                      {{ option.label }}
-                      <labeled-badge
-                        v-if="option.experimental"
-                        :text="t('prefs.experimental')"
-                      />
-                    </div>
+                    {{ option.label }}
+                    <labeled-badge
+                      v-if="option.experimental"
+                      :text="t('prefs.experimental')"
+                    />
                   </template>
                 </radio-button>
               </template>
