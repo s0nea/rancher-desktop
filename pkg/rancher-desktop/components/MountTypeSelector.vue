@@ -7,18 +7,18 @@ import { mapGetters } from 'vuex';
 
 import RdInput from '@pkg/components/RdInput.vue';
 import RdSelect from '@pkg/components/RdSelect.vue';
-import LabeledBadge from '@pkg/components/form/LabeledBadge.vue';
 import RdFieldset from '@pkg/components/form/RdFieldset.vue';
 import {
   CacheMode, MountType, ProtocolVersion, SecurityModel, Settings, VMType,
 } from '@pkg/config/settings';
 import { RecursiveTypes } from '@pkg/utils/typeUtils';
+import ExperimentalIcon from '~/components/form/ExperimentalIcon.vue';
 
 import type { PropType } from 'vue';
 
 export default Vue.extend({
   components: {
-    LabeledBadge,
+    ExperimentalIcon,
     RadioGroup,
     RdFieldset,
     RadioButton,
@@ -152,9 +152,8 @@ export default Vue.extend({
                       v-tooltip="disabledVirtIoFsTooltip(option.disabled)"
                     >
                       {{ option.label }}
-                      <labeled-badge
+                      <experimental-icon
                         v-if="option.experimental"
-                        :text="t('prefs.experimental')"
                       />
                     </div>
                   </template>

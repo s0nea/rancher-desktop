@@ -4,11 +4,11 @@ import semver from 'semver';
 import Vue, { VueConstructor } from 'vue';
 import { mapGetters, mapState } from 'vuex';
 
-import LabeledBadge from '@pkg/components/form/LabeledBadge.vue';
 import RdCheckbox from '@pkg/components/form/RdCheckbox.vue';
 import RdFieldset from '@pkg/components/form/RdFieldset.vue';
 import { Settings, VMType } from '@pkg/config/settings';
 import { RecursiveTypes } from '@pkg/utils/typeUtils';
+import ExperimentalIcon from '~/components/form/ExperimentalIcon.vue';
 
 import type { PropType } from 'vue';
 
@@ -20,7 +20,7 @@ interface VuexBindings {
 export default (Vue as VueConstructor<Vue & VuexBindings>).extend({
   name:       'preferences-virtual-machine-emulation',
   components: {
-    LabeledBadge,
+    ExperimentalIcon,
     RadioGroup,
     RdFieldset,
     RdCheckbox,
@@ -118,9 +118,8 @@ export default (Vue as VueConstructor<Vue & VuexBindings>).extend({
                       v-tooltip="disabledVmTypeTooltip(option.disabled)"
                     >
                       {{ option.label }}
-                      <labeled-badge
+                      <experimental-icon
                         v-if="option.experimental"
-                        :text="t('prefs.experimental')"
                       />
                     </div>
                   </template>
