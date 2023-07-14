@@ -16,6 +16,7 @@ import type { ServerState } from '@pkg/main/commandServer/httpCommandServer';
 import { RecursivePartial } from '@pkg/utils/typeUtils';
 
 import type { PropType } from 'vue';
+import Tabbed from '~/components/Tabbed/index.vue';
 
 export default Vue.extend({
   name:       'preferences-body-virtual-machine',
@@ -60,9 +61,7 @@ export default Vue.extend({
       );
     },
     selectTab(tab: string) {
-      const tabbed = this.$refs.tabbed as RdTabbed;
-
-      tabbed.$children[0].select(tab);
+      (this.$refs.tabbed as InstanceType<typeof RdTabbed>).select(tab);
     },
   },
 });

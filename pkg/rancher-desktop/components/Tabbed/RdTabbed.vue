@@ -6,6 +6,12 @@ import Tabbed from '@pkg/components/Tabbed/index.vue';
 export default Vue.extend({
   name:       'rd-tabbed',
   components: { Tabbed },
+
+  methods: {
+    select(tabName: string) {
+      (this.$parent as InstanceType<typeof Tabbed>).select(tabName);
+    },
+  },
 });
 </script>
 

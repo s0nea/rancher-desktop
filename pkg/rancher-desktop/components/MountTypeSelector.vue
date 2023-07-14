@@ -150,6 +150,7 @@ export default (Vue as VueConstructor<Vue & VuexBindings>).extend({
           break;
         }
       }
+      compatiblePrefs.push( { prefName: VMType.QEMU, tabName: 'emulation' } );
 
       return compatiblePrefs;
     },
