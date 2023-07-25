@@ -61,7 +61,13 @@ export default (Vue as VueConstructor<Vue & VuexBindings>).extend({
     filteredExtensions(): FilteredExtensions {
       let tempExtensions = this.extensions
         .filter((item) => {
-          return this.isAllowed(item.slug);
+          const isAllowed = this.isAllowed(item.slug);
+
+          if (!isAllowed && this.isInstalled(item.slug)) {
+            this.uninstall(item.slug);
+          }
+
+          return isAllowed;
         })
         .map((item) => {
           if (this.isInstalled(item.slug)) {
@@ -96,6 +102,9 @@ export default (Vue as VueConstructor<Vue & VuexBindings>).extend({
     },
     isAllowed(slug: string) {
       return !this.allowedListEnabled || this.allowedExtensions.includes(slug);
+    },
+    uninstall(slug: string) {
+      this.$store.dispatch('extensions/uninstall', slug);
     },
   },
 });
