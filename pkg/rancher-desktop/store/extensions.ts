@@ -15,6 +15,8 @@ interface ExtensionsState {
   extensions: Record<string, ExtensionState>;
 }
 
+const uri = (port: number, pathRemainder: string) => `http://localhost:${ port }/v1/${ pathRemainder }`;
+
 export const state: () => ExtensionsState = () => ({ extensions: {} });
 
 export const mutations: MutationsType<ExtensionsState> = {
@@ -37,6 +39,32 @@ export const actions = {
     const result: Record<string, ExtensionState> = await response.json();
 
     commit('SET_EXTENSIONS', result);
+  },
+  async uninstall({ commit, rootState }: ExtensionsActionContext, id: string) {
+    const { port, user, password } = rootState.credentials.credentials;
+
+    return await fetch(
+      uri(port, `extensions/uninstall?id=${ id }`),
+      {
+        headers: new Headers({
+          Authorization:  `Basic ${ window.btoa(`${ user }:${ password }`) }`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        }),
+        method: 'POST',
+      });
+  },
+  async install({ commit, rootState }: ExtensionsActionContext, id: string) {
+    const { port, user, password } = rootState.credentials.credentials;
+
+    return await fetch(
+      uri(port, `extensions/install?id=${ id }`),
+      {
+        headers: new Headers({
+          Authorization:  `Basic ${ window.btoa(`${ user }:${ password }`) }`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        }),
+        method: 'POST',
+      });
   },
 };
 

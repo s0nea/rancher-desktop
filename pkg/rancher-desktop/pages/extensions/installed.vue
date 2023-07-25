@@ -59,18 +59,7 @@ export default Vue.extend({
       return ext.labels?.['org.opencontainers.image.title'] ?? ext.id;
     },
     uninstall(id: string) {
-      fetch(
-        `http://localhost:${ this.credentials?.port }/v1/extensions/uninstall?id=${ id }`,
-        {
-          method:  'POST',
-          headers: new Headers({
-            Authorization: `Basic ${ window.btoa(
-              `${ this.credentials?.user }:${ this.credentials?.password }`,
-            ) }`,
-            'Content-Type': 'application/x-www-form-urlencoded',
-          }),
-        },
-      );
+      this.$store.dispatch('extensions/uninstall', id);
     },
   },
 });

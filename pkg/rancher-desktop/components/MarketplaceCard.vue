@@ -118,18 +118,7 @@ export default {
       this.loading = true;
       this.resetBanners();
 
-      fetch(
-        `http://localhost:${ this.credentials?.port }/v1/extensions/${ action }?id=${ this.versionedExtension }`,
-        {
-          method:  'POST',
-          headers: new Headers({
-            Authorization: `Basic ${ window.btoa(
-              `${ this.credentials?.user }:${ this.credentials?.password }`,
-            ) }`,
-            'Content-Type': 'application/x-www-form-urlencoded',
-          }),
-        },
-      ).then((r) => {
+      this.$store.dispatch(`extensions/${ action }`, this.versionedExtension).then((r) => {
         if (!r.ok) {
           this.error = r.statusText;
           this.loading = false;
