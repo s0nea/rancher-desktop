@@ -1,7 +1,7 @@
 <script lang="ts">
 import os from 'os';
 
-import { RadioButton, RadioGroup } from '@rancher/components';
+import { RadioGroup } from '@rancher/components';
 import semver from 'semver';
 import Vue, { VueConstructor } from 'vue';
 import { mapGetters, mapState } from 'vuex';
@@ -9,6 +9,7 @@ import { mapGetters, mapState } from 'vuex';
 import RdInput from '@pkg/components/RdInput.vue';
 import RdSelect from '@pkg/components/RdSelect.vue';
 import RdFieldset from '@pkg/components/form/RdFieldset.vue';
+import RdRadioButton from '@pkg/components/form/RdRadioButton.vue';
 import TooltipIcon from '@pkg/components/form/TooltipIcon.vue';
 import {
   CacheMode, MountType, ProtocolVersion, SecurityModel, Settings, VMType,
@@ -29,7 +30,7 @@ export default (Vue as VueConstructor<Vue & VuexBindings>).extend({
     IncompatiblePreferencesAlert,
     RadioGroup,
     RdFieldset,
-    RadioButton,
+    RdRadioButton,
     RdSelect,
     RdInput,
   },
@@ -109,11 +110,11 @@ export default (Vue as VueConstructor<Vue & VuexBindings>).extend({
     updateValue<P extends keyof RecursiveTypes<Settings>>(property: P, value: RecursiveTypes<Settings>[P]) {
       this.$emit('update', property, value);
     },
-    disabledVirtIoFsTooltip(disabled: boolean): { content: string } | {} {
-      let tooltip = {};
+    disabledVirtIoFsTooltip(disabled: boolean): string | undefined {
+      let tooltip;
 
       if (disabled) {
-        tooltip = { content: this.t(`prefs.onlyWithVZ_${ this.arch }`) };
+        tooltip = this.t(`prefs.onlyWithVZ_${ this.arch }`);
       }
 
       return tooltip;
@@ -155,21 +156,20 @@ export default (Vue as VueConstructor<Vue & VuexBindings>).extend({
             <radio-group
               :name="groupName"
               :options="options"
-              :disabled="isLocked"
-              :class="{ 'locked-radio' : isLocked }"
             >
               <template
                 v-for="(option, index) in options"
-                #[index]="{ isDisabled }"
+                #[index]
               >
-                <radio-button
+                <rd-radio-button
                   :key="groupName+'-'+index"
-                  v-tooltip="disabledVirtIoFsTooltip(option.disabled)"
+                  :tooltip="disabledVirtIoFsTooltip(option.disabled)"
                   :name="groupName"
                   :value="preferences.experimental.virtualMachine.mount.type"
                   :val="option.value"
-                  :disabled="option.disabled || isDisabled"
+                  :disabled="option.disabled"
                   :data-test="option.label"
+                  :is-locked="isLocked"
                   @input="updateValue('experimental.virtualMachine.mount.type', $event)"
                 >
                   <template #label>
@@ -186,7 +186,7 @@ export default (Vue as VueConstructor<Vue & VuexBindings>).extend({
                       @update:tab="$emit('update:tab', $event)"
                     />
                   </template>
-                </radio-button>
+                </rd-radio-button>
               </template>
             </radio-group>
           </template>

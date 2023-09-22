@@ -1,7 +1,8 @@
 <script lang="ts">
-import { RadioButton, RadioGroup } from '@rancher/components';
+import { RadioGroup } from '@rancher/components';
 import Vue from 'vue';
 
+import RdRadioButton from '@pkg/components/form/RdRadioButton.vue';
 import { PathManagementStrategy } from '@pkg/integrations/pathManager';
 
 interface pathManagementOptions {
@@ -12,8 +13,8 @@ interface pathManagementOptions {
 
 export default Vue.extend({
   components: {
+    RdRadioButton,
     RadioGroup,
-    RadioButton,
   },
   props: {
     value: {
@@ -69,34 +70,31 @@ export default Vue.extend({
 <template>
   <radio-group
     :name="groupName"
-    :label="label"
     :tooltip="tooltip"
-    :value="value"
     :options="options"
     :row="row"
-    :disabled="isLocked"
-    :class="{ 'locked-radio' : isLocked }"
     class="path-management"
-    @input="updateVal"
   >
     <template v-if="showLabel" #label>
       <slot name="label" />
     </template>
-    <template #1="{ option, index, isDisabled, mode }">
-      <radio-button
+    <template
+      v-for="(option, index) in options"
+      #[index]
+    >
+      <rd-radio-button
         :key="groupName+'-'+index"
         :name="groupName"
         :value="value"
         :label="option.label"
         :val="option.value"
-        :disabled="isDisabled"
-        :mode="mode"
-        v-on="$listeners"
+        :is-locked="isLocked"
+        @input="updateVal"
       >
         <template #description>
           <span v-html="option.description" />
         </template>
-      </radio-button>
+      </rd-radio-button>
     </template>
   </radio-group>
 </template>

@@ -1,10 +1,11 @@
 <script>
 import { RadioGroup } from '@rancher/components';
 
+import RdRadioButton from '@pkg/components/form/RdRadioButton.vue';
 import { ContainerEngine } from '@pkg/config/settings';
 
 export default {
-  components: { RadioGroup },
+  components: { RdRadioButton, RadioGroup },
   props:      {
     containerEngine: {
       type:    String,
@@ -31,6 +32,9 @@ export default {
           };
         });
     },
+    groupName() {
+      return 'mountType';
+    },
   },
   methods: {
     updateEngine(value) {
@@ -43,17 +47,28 @@ export default {
 <template>
   <div class="engine-selector">
     <radio-group
-      name="containerEngine"
+      :name="groupName"
       class="container-engine"
-      :class="{ 'locked-radio' : isLocked }"
-      :value="containerEngine"
       :options="options"
       :row="row"
-      :disabled="isLocked"
-      @input="updateEngine"
     >
-      <template #label>
-        <slot name="label" />
+      <template
+        v-for="(option, index) in options"
+        #[index]
+      >
+        <rd-radio-button
+          :key="groupName+'-'+index"
+          :name="groupName"
+          :value="containerEngine"
+          :val="option.value"
+          :is-locked="isLocked"
+          :description="option.description"
+          @input="updateEngine"
+        >
+          <template #label>
+            {{ option.label }}
+          </template>
+        </rd-radio-button>
       </template>
     </radio-group>
   </div>
