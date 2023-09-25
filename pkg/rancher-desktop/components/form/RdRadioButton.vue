@@ -16,12 +16,17 @@ export default Vue.extend({
       default: null,
     },
   },
+  computed: {
+    getTooltip(): { content: string } | undefined {
+      return !this.isLocked ? { content: this.tooltip } : undefined;
+    },
+  },
 });
 </script>
 
 <template>
   <radio-button
-    v-tooltip="{ content: tooltip }"
+    :v-tooltip="getTooltip"
     :disabled="$attrs.disabled || isLocked"
     :class="{ 'locked' : isLocked && !$attrs.disabled }"
     v-bind="$attrs"
