@@ -37,6 +37,9 @@ export default Vue.extend({
     noproxyErrorMessages(): { duplicate: string } {
       return { duplicate: this.t('virtualMachine.proxy.noproxy.errors.duplicate') };
     },
+    isNoProxyFieldReadOnly() {
+      return this.isFieldDisabled || this.isPreferenceLocked('experimental.virtualMachine.proxy.noproxy');
+    },
   },
   methods: {
     onChange<P extends keyof RecursiveTypes<Settings>>(property: P, value: RecursiveTypes<Settings>[P]) {
@@ -117,10 +120,11 @@ export default Vue.extend({
       <div class="proxy-col">
         <rd-fieldset
           :legend-text="t('virtualMachine.proxy.noproxy.legend', { }, true)"
+          :is-locked="isPreferenceLocked('preferences.experimental.virtualMachine.proxy.noproxy')"
         >
           <string-list
             :placeholder="t('virtualMachine.proxy.noproxy.placeholder', { }, true)"
-            :readonly="isFieldDisabled"
+            :readonly="isNoProxyFieldReadOnly"
             :actions-position="'left'"
             :items="preferences.experimental.virtualMachine.proxy.noproxy"
             :error-messages="noproxyErrorMessages"
@@ -155,6 +159,13 @@ export default Vue.extend({
 
       .string-list-footer {
         padding-right: 2rem;
+      }
+
+      &.readonly {
+        background-color: var(--input-disabled-bg);
+        color: var(--input-disabled-text);
+        opacity: 1;
+        cursor: not-allowed;
       }
     }
   }
