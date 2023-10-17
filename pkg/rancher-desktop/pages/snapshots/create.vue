@@ -134,6 +134,7 @@ export default Vue.extend<Data, Methods, Computed, never>({
           ref="nameInput"
           v-model="name"
           v-focus
+          data-test="createSnapshotNameInput"
           class="input"
           type="text"
           :disabled="creating"
@@ -145,6 +146,7 @@ export default Vue.extend<Data, Methods, Computed, never>({
         <TextAreaAutoGrow
           ref="notesInput"
           v-model="notes"
+          data-test="createSnapshotDescInput"
           class="input"
           :disabled="creating"
         />
