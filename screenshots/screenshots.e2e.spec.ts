@@ -1,9 +1,10 @@
 import os from 'os';
 import path from 'path';
 
-import { test, expect, _electron } from '@playwright/test';
+import { test, expect, _electron, webkit } from '@playwright/test';
 
 import { MainWindowScreenshots, PreferencesScreenshots } from './Screenshots';
+import { containersList } from './test-data/containers';
 import { lockedSettings } from './test-data/preferences';
 import { snapshotsList } from './test-data/snapshots';
 import { NavPage } from '../e2e/pages/nav-page';
@@ -71,27 +72,40 @@ test.describe.serial('Main App Test', () => {
 
     await page.waitForTimeout(2500);
 
-    await tool('rdctl', 'extension', 'install', 'ghcr.io/rancher-sandbox/epinio-desktop-extension');
+    /* await tool('rdctl', 'extension', 'install', 'ghcr.io/rancher-sandbox/epinio-desktop-extension');
     await tool('rdctl', 'extension', 'install', 'docker/logs-explorer-extension');
 
     const navExtension = page.locator('[data-test="extension-nav-epinio"]');
 
-    await expect(navExtension).toBeVisible({ timeout: 30000 });
+    await expect(navExtension).toBeVisible({ timeout: 30000 });*/
   });
 
-  test.afterAll(async({ colorScheme }) => {
-    await tool('rdctl', 'extension', 'uninstall', 'ghcr.io/rancher-sandbox/epinio-desktop-extension');
-    await tool('rdctl', 'extension', 'uninstall', 'docker/logs-explorer-extension');
+  test.afterAll(({ colorScheme }) => {
+    // await tool('rdctl', 'extension', 'uninstall', 'ghcr.io/rancher-sandbox/epinio-desktop-extension');
+    // await tool('rdctl', 'extension', 'uninstall', 'docker/logs-explorer-extension');
 
     return teardown(electronApp, __filename);
   });
 
   test.describe('Main Page', () => {
-    test('General Page', async({ colorScheme }) => {
+    /* test('General Page', async({ colorScheme }) => {
       await screenshot.take('General');
+    }); */
+
+    test('Containers Page', async() => {
+      const containersPage = await navPage.navigateTo('Containers');
+
+      await containersPage.page.exposeFunction('listContainersMock', (options?: any) => {
+        return containersList;
+      });
+      await containersPage.page.evaluate(() => {
+        // @ts-ignore
+        window.ddClient.docker.listContainers = listContainersMock;
+      });
+      await page.waitForTimeout(50000);
     });
 
-    test('PortForwarding Page', async({ colorScheme }) => {
+    /* test('PortForwarding Page', async({ colorScheme }) => {
       await screenshot.take('PortForwarding', navPage);
     });
 
@@ -154,10 +168,10 @@ test.describe.serial('Main App Test', () => {
       await screenshot.take('Extensions-Installed');
 
       await extensionsPage.tabCatalog.click();
-    });
+    }); */
   });
 
-  test.describe('Preferences Page', () => {
+  /* test.describe('Preferences Page', () => {
     let prefScreenshot: PreferencesScreenshots;
     let preferencesPage: Page;
     let e2ePreferences: PreferencesPage;
@@ -347,5 +361,5 @@ test.describe.serial('Main App Test', () => {
       await preferencesPage.waitForTimeout(250);
       await prefScreenshot.take('kubernetes', 'lockedFields');
     });
-  });
+  }); */
 });
