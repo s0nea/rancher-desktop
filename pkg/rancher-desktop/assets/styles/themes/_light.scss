@@ -318,8 +318,9 @@ BODY, .theme-light {
   --nav-expander-hover         : #{darken($medium, 10%)};
   --nav-border                 : #{$medium};
   --nav-border-size            : 1px;
-  --footer-bg                  : transparent;
-  --footer-height              : 0px;
+  --footer-bg                  : #{$lightest};
+  --footer-border              : #{$medium};
+  --footer-height              : 25px;
 
   --topmenu-bg                 : #{$lightest};
   --topmenu-text               : #{$darkest};
