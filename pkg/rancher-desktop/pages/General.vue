@@ -28,9 +28,6 @@
       @updateTelemetry="updateTelemetry"
     />
     <hr>
-    <div class="network-status">
-      <span class="networkStatusInfo"><b>Network status:</b> {{ networkStatusLabel }}</span>
-    </div>
   </div>
 </template>
 
@@ -42,7 +39,6 @@ import TelemetryOptIn from '@pkg/components/TelemetryOptIn.vue';
 import UpdateStatus from '@pkg/components/UpdateStatus.vue';
 import { defaultSettings } from '@pkg/config/settings';
 import { ipcRenderer } from '@pkg/utils/ipcRenderer';
-import { networkStatus } from '@pkg/utils/networks';
 
 export default {
   name:       'General',
@@ -55,20 +51,10 @@ export default {
       autoUpdateLocked: null,
       /** @type import('@pkg/main/update').UpdateState | null */
       updateState:      null,
-      /** @type string */
-      networkStatus:    true,
     };
   },
 
-  computed: {
-    networkStatusLabel() {
-      return this.networkStatus ? networkStatus.CONNECTED : networkStatus.OFFLINE;
-    },
-  },
-
   mounted() {
-    this.onNetworkStatusUpdate(window.navigator.onLine);
-
     this.$store.dispatch(
       'page/setHeader',
       {
@@ -83,23 +69,9 @@ export default {
       this.$data.settings = settings;
     });
     ipcRenderer.send('settings-read');
-    ipcRenderer.on('update-network-status', (event, status) => {
-      this.onNetworkStatusUpdate(status);
-    });
     ipcRenderer.invoke('get-locked-fields').then((lockedFields) => {
       this.$data.telemetryLocked = _.get(lockedFields, 'application.telemetry.enabled');
       this.$data.autoUpdateLocked = _.get(lockedFields, 'application.updater.enabled');
-    });
-    window.addEventListener('online', () => {
-      this.onNetworkStatusUpdate(true);
-    });
-    window.addEventListener('offline', () => {
-      this.onNetworkStatusUpdate(false);
-    });
-    // This event is triggered when the Preferences page is revealed (among other times).
-    // If the network status changed while the window was closed, this will update it.
-    window.addEventListener('pageshow', () => {
-      this.onNetworkStatusUpdate(window.navigator.onLine);
     });
   },
 
@@ -123,9 +95,6 @@ export default {
     },
     updateTelemetry(value) {
       ipcRenderer.invoke('settings-write', { application: { telemetry: { enabled: value } } });
-    },
-    onNetworkStatusUpdate(status) {
-      this.$data.networkStatus = status;
     },
   },
 };

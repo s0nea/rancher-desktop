@@ -126,7 +126,6 @@ export default BackendProgress;
   .progress {
     display: flex;
     flex-direction: row;
-    padding: 5px 0 5px 0;
     white-space: nowrap;
 
     .details {

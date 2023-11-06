@@ -136,8 +136,10 @@ product:
   clusterManagement: Cluster Management
   monitoring: Monitoring
   mcapps: Multi-cluster Apps
-  version: "Version:"
+  version: Version
   versionChecking: (checking...)
+  networkStatus: Network status
+  kubernetesVersion: Kubernetes
 
 suffix:
   percent: "%"
