@@ -140,6 +140,7 @@ product:
   versionChecking: (checking...)
   networkStatus: Network status
   kubernetesVersion: Kubernetes
+  containerEngine: CE
 
 suffix:
   percent: "%"

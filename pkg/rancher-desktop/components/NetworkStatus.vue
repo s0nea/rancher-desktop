@@ -53,13 +53,14 @@ export default {
     <i
       v-if="icon && showIcon"
       v-tooltip="{
-        content: `<b> ${ t('product.networkStatus') } </b>: ${ networkStatusLabel }`,
-        placement: 'left'
+        content: `<b>${ t('product.networkStatus') }</b>: ${ networkStatusLabel }`,
+        placement: 'left',
+        classes: 'tooltip-footer'
       }"
       :class="icon"
     />
     <span v-else>
-      <b v-html="t('product.networkStatus') + ':'"></b> {{ networkStatusLabel }}
+      <b v-html="t('product.networkStatus')"></b>: {{ networkStatusLabel }}
     </span>
   </span>
 </template>
